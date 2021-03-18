@@ -211,6 +211,16 @@ function gutenberg_get_widget_object( $id_base ) {
 
 	foreach ( $wp_widget_factory->widgets as $widget_object ) {
 		if ( $widget_object->id_base === $id_base ) {
+			// When merged to Core, this property should be added to WP_Widget
+			// and set to true for all Core widgets instead of patched in here.
+			$widget_object->show_instance_in_rest = (
+				0 === strpos( get_class( $widget_object ), 'WP_' ) ||
+				(
+					isset( $widget_object->show_instance_in_rest ) &&
+					$widget_object->show_instance_in_rest
+				)
+			);
+
 			return $widget_object;
 		}
 	}
