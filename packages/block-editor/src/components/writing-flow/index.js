@@ -408,7 +408,6 @@ export default function WritingFlow( { children } ) {
 				// doesn't refocus this block and so it allows default behaviour
 				// (moving focus to the next tabbable element).
 				noCapture.current = true;
-				lastFocus.current = target;
 				next.current.focus();
 				return;
 			} else if ( isEscape ) {
@@ -560,6 +559,18 @@ export default function WritingFlow( { children } ) {
 			multiSelectionContainer.current.focus();
 		}
 	}, [ hasMultiSelection, isMultiSelecting ] );
+
+	useEffect( () => {
+		function onFocusOut( event ) {
+			lastFocus.current = event.target;
+		}
+
+		container.current.addEventListener( 'focusout', onFocusOut );
+
+		return () => {
+			container.current.removeEventListener( 'focusout', onFocusOut );
+		};
+	}, [] );
 
 	const className = classnames( 'block-editor-writing-flow', {
 		'is-navigate-mode': isNavigationMode,
