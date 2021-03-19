@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useMemo } from '@wordpress/element';
+import { useMemo, useRef } from '@wordpress/element';
 import {
 	BlockEditorProvider,
 	BlockList,
@@ -12,27 +12,30 @@ import {
 import { DropZoneProvider, SlotFillProvider } from '@wordpress/components';
 
 /**
- * External dependencies
- */
-import { useDialogState } from 'reakit/Dialog';
-
-/**
  * Internal dependencies
  */
 import Header from '../header';
 import useSidebarBlockEditor from './use-sidebar-block-editor';
+import initializeInserterOuterSection from '../inserter/inserter-outer-section';
+
+function useInserter() {
+	const inserterRef = useRef();
+
+	if ( ! inserterRef.current ) {
+		inserterRef.current = initializeInserterOuterSection();
+	}
+
+	return inserterRef.current;
+}
 
 export default function SidebarBlockEditor( { sidebar } ) {
 	const [ blocks, onInput, onChange ] = useSidebarBlockEditor( sidebar );
-	const inserter = useDialogState( {
-		modal: false,
-		animated: 150,
-	} );
+	const inserter = useInserter();
 	const settings = useMemo(
 		() => ( {
-			__experimentalSetIsInserterOpened: inserter.setVisible,
+			__experimentalSetIsInserterOpened: () => inserter.expand(),
 		} ),
-		[ inserter.setVisible ]
+		[ inserter.expand ]
 	);
 
 	return (
