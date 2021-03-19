@@ -30,7 +30,7 @@ export default function BlockNavigationList( {
 	return (
 		<__experimentalBlockNavigationTree
 			blocks={ block.innerBlocks }
-			selectedBlockClientId={ selectedBlockClientId }
+			selectedBlockClientIds={ [ selectedBlockClientId ] }
 			selectBlock={ selectBlock }
 			__experimentalFeatures={ __experimentalFeatures }
 			showNestedBlocks

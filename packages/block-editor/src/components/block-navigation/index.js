@@ -41,7 +41,7 @@ function BlockNavigation( {
 
 			<BlockNavigationTree
 				blocks={ hasHierarchy ? [ rootBlock ] : rootBlocks }
-				selectedBlockClientId={ selectedBlockClientId }
+				selectedBlockClientIds={ [ selectedBlockClientId ] }
 				selectBlock={ selectBlock }
 				__experimentalFeatures={ __experimentalFeatures }
 				showNestedBlocks
