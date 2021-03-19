@@ -249,6 +249,8 @@ export default function WritingFlow( { children } ) {
 	// browser behaviour across blocks.
 	const verticalRect = useRef();
 
+	const lastFocus = useRef();
+
 	const onSelectionStart = useMultiSelection( container );
 
 	const {
@@ -406,6 +408,7 @@ export default function WritingFlow( { children } ) {
 				// doesn't refocus this block and so it allows default behaviour
 				// (moving focus to the next tabbable element).
 				noCapture.current = true;
+				lastFocus.current = target;
 				next.current.focus();
 				return;
 			} else if ( isEscape ) {
@@ -572,6 +575,7 @@ export default function WritingFlow( { children } ) {
 				selectedClientId={ selectedBlockClientId }
 				containerRef={ container }
 				noCapture={ noCapture }
+				lastFocus={ lastFocus }
 				hasMultiSelection={ hasMultiSelection }
 				multiSelectionContainer={ multiSelectionContainer }
 			/>
@@ -601,6 +605,7 @@ export default function WritingFlow( { children } ) {
 				selectedClientId={ selectedBlockClientId }
 				containerRef={ container }
 				noCapture={ noCapture }
+				lastFocus={ lastFocus }
 				hasMultiSelection={ hasMultiSelection }
 				multiSelectionContainer={ multiSelectionContainer }
 				isReverse
