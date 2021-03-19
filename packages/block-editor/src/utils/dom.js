@@ -40,7 +40,10 @@ export function getBlockPreviewContainerDOMNode( clientId, doc ) {
  * @return {boolean} Whether element is a block focus stop.
  */
 export function isBlockFocusStop( element ) {
-	return element.classList.contains( 'block-editor-block-list__block' );
+	return (
+		element.classList.contains( 'block-editor-block-list__block' ) ||
+		element.classList.contains( 'block-editor-button-block-appender' )
+	);
 }
 
 /**
