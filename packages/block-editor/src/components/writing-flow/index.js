@@ -118,6 +118,7 @@ export function getClosestTabbable(
 			return false;
 		}
 
+		// Skip focusable elements such as links within content editable nodes.
 		if ( node.isContentEditable && node.contentEditable !== 'true' ) {
 			return false;
 		}
@@ -207,8 +208,6 @@ export default function WritingFlow( { children } ) {
 	// position of the start position can be restored. This is to recreate
 	// browser behaviour across blocks.
 	const verticalRect = useRef();
-
-	const lastFocus = useRef();
 
 	const onSelectionStart = useMultiSelection( container );
 
@@ -519,13 +518,14 @@ export default function WritingFlow( { children } ) {
 		}
 	}, [ hasMultiSelection, isMultiSelecting ] );
 
+	const lastFocus = useRef();
+
 	useEffect( () => {
 		function onFocusOut( event ) {
 			lastFocus.current = event.target;
 		}
 
 		container.current.addEventListener( 'focusout', onFocusOut );
-
 		return () => {
 			container.current.removeEventListener( 'focusout', onFocusOut );
 		};
