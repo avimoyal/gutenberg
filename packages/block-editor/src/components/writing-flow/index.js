@@ -118,6 +118,10 @@ export function getClosestTabbable(
 			return false;
 		}
 
+		if ( node.isContentEditable && node.contentEditable !== 'true' ) {
+			return false;
+		}
+
 		if ( onlyVertical ) {
 			const nodeRect = node.getBoundingClientRect();
 
